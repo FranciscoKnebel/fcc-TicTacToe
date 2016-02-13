@@ -74,11 +74,17 @@ h3, h4 {
 }
 
 .option:hover {
+  transition: 0.5s;
   background-color: #EFF4FA;
 }
 
 .option:active {
+  transition: 0.5s;
   background-color: #E0EAF6;
+}
+
+.empty {
+  background-color: #0EABA0;
 }
 
 .X {
