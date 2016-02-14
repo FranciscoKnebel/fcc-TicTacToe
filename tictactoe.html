@@ -19,9 +19,11 @@
 
     <div ng-controller="Game">
       <div class="container container-extras" ng-hide="choice">
-        <div class="col-sm-4 scoreboard" ng-hide="myCheck">
+        <div class="col-sm-4" ng-hide="myCheck" align="center">
           <h2 class="scoreboard">Scoreboard</h2>
-            <h2 class="scoreboard">X <small>{{X}} - {{O}}</small> O</h2>
+          <br>
+          <h2>X <small>{{X}} - {{O}}</small> O</h2>
+          <h2>Total games: <small>{{games}}</small></h2>
         </div>
         <div class="screen" ng-class="myCheck ? 'col-sm-12' : 'col-sm-8'">
           <div class="row">

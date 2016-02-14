@@ -2,6 +2,7 @@ var chooseTeam = false;
 var currentTeam = '';
 var AITeam = '';
 var yourTurn = true;
+var currentGame = 0;
 var currentMove = 0;
 var currentScore = [0, 0];
 var WinningCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
@@ -25,6 +26,7 @@ app.controller('Game', function($scope) {
         currentMove++;
         if(checkWin(currentTeam)) {
           addWin(currentTeam);
+          //alert("Now, how did you do that? Contact me so I can fix it. Error 003");
         }
         else if (currentMove === 9) { //If all blocks are set and no winners was found, it's a draw.
           alert('Draw! ' + currentScore[0] + '-' + currentScore[1]);
@@ -85,6 +87,7 @@ app.controller('Game', function($scope) {
   function updateScore() {
     $scope.X = currentScore[0];
     $scope.O = currentScore[1];
+    $scope.games = currentGame;
 
     if(chooseTeam === false) {
       $scope.choice = true;
@@ -117,7 +120,7 @@ app.controller('Game', function($scope) {
     var id;
 
     while(flag) {
-      id = '#' + Math.floor((Math.random() * 8) + 0);
+      id = '#' + Math.floor((Math.random() * 9) + 0);
 
       if ( $(id).hasClass('empty') ) {
         flag = false;
@@ -135,7 +138,7 @@ app.controller('Game', function($scope) {
 
       if( $('#' + currentWin[0]).hasClass(team) && $('#' + currentWin[1]).hasClass(team) && $('#' + currentWin[2]).hasClass(team)) {
         hasCombo = true;
-        console.log(team + ' won! Combo is ' + currentWin);
+        console.log(currentWin);
       }
     }
 
@@ -151,7 +154,7 @@ app.controller('Game', function($scope) {
         $('#' + i).addClass('empty');
       }
     }
-
+    $scope.games = ++currentGame;
     currentMove = 0;
     if(currentTeam === 'O') { /* or AI is X */
       setBlock(AIchoice(), false);
