@@ -1,23 +1,17 @@
 var chooseTeam = false;
 var currentTeam = '';
 var AITeam = '';
-var currentScore = [0, 0];
 var yourTurn = true;
 var currentMove = 0;
-
+var currentScore = [0, 0];
+var WinningCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 
 var app = angular.module('tictactoe', ['ngAnimate']);
 app.controller('Game', function($scope) {
   updateScore();
 
-  $scope.WinnerX = function() {
-    addWin('X');
-    updateScore();
-  }
+  if(yourTurn === false) { /* AI plays first */
 
-  $scope.WinnerO = function() {
-    addWin('O');
-    updateScore();
   }
 
   $scope.ChooseTeam = function(team) {
@@ -33,19 +27,30 @@ app.controller('Game', function($scope) {
         //Sets block chosen and checks if user has a winning combo
         setBlock("#" + blockID, true);
         currentMove++;
-        checkWin(currentTeam);
-        yourTurn = false;
-
-        //now it is the AI's turn. Sets block and check if won
-        if(currentMove < 8) {
+        if(checkWin(currentTeam)) {
+          addWin(currentTeam);
+        }
+        else if (currentMove === 9) { //If all blocks are set and no winners was found, it's a draw.
+          alert('Draw! ' + currentScore[0] + '-' + currentScore[1]);
+          cleanBoard();
+        }
+        else {
+          yourTurn = false;
+          //now it is the AI's turn. Sets block and check if won
           setBlock(AIchoice(), false);
           currentMove++;
-          checkWin(AITeam);
+          if(checkWin(AITeam)) {
+            addWin(AITeam);
+          }
+          else if (currentMove === 9){ //If all blocks are set and no winners was found, it's a draw.
+            alert('Draw! ' + currentScore[0] + '-' + currentScore[1]);
+            cleanBoard();
+          }
           yourTurn = true;
         }
       }
       else if(blockClass === 'X' || blockClass === 'O') {
-        //alert("You can't play there, dummy!");
+        alert("You can't play there, dummy!");
       }
       else {
         /* bad behavior*/
@@ -75,6 +80,10 @@ app.controller('Game', function($scope) {
     else {
       console.log("Error 001");
     }
+
+    updateScore();
+    alert('Player ' + Team + ' won! ' + currentScore[0] + '-' + currentScore[1]);
+    cleanBoard();
   }
 
   function updateScore() {
@@ -117,10 +126,32 @@ app.controller('Game', function($scope) {
     }
   }
 
-  function checkWin() {
-    for(var i = 0; i < 8; i++) {
+  function checkWin(team) {
+    var currentWin;
+    var hasCombo = false;
 
+    for(var i = 0; i < WinningCombos.length && hasCombo === false; i++) {
+      currentWin = WinningCombos[i];
+
+      if( $('#' + currentWin[0]).hasClass(team) && $('#' + currentWin[1]).hasClass(team) && $('#' + currentWin[2]).hasClass(team)) {
+        hasCombo = true;
+        console.log(team + ' won! Combo is ' + currentWin);
+      }
     }
+
+    return hasCombo;
   }
 
+  function cleanBoard() {
+    // Goes through all block pieces and removes added classes and resets block.
+    for(var i = 0; i < 9; i++) {
+      if(!$('#' + i).hasClass('empty')) {
+        $('#' + i).removeClass('X');
+        $('#' + i).removeClass('O');
+        $('#' + i).addClass('empty');
+      }
+    }
+
+    currentMove = 0;
+  }
 });
