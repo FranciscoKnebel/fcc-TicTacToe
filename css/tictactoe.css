@@ -41,7 +41,7 @@ h3, h4 {
   background-color: #eee;
   border-style: double;
   margin-bottom: 100px;
-  padding-bottom: 50px;
+  padding: 15px;
 }
 
 .scoreboard {
@@ -49,17 +49,6 @@ h3, h4 {
   text-shadow: 1px 2px black;
   padding: 10px;
   word-break: break-all;
-}
-
-.screen {
-  padding: 20px 0 0 0;
-}
-
-@media (min-width:768px)
-{
-  .screen{
-    padding: 20px 20px 0 0;
-  }
 }
 
 .option {

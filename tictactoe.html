@@ -21,10 +21,9 @@
       <div class="container container-extras" ng-hide="choice">
         <div class="col-sm-4 scoreboard" ng-hide="myCheck">
           <h2 class="scoreboard">Scoreboard</h2>
-          <h2 class="scoreboard">X: {{X}}</h2>
-          <h2 class="scoreboard">O: {{O}}</h2>
+            <h2 class="scoreboard">X <small>{{X}} - {{O}}</small> O</h2>
         </div>
-        <div class="col-sm-8 screen">
+        <div class="screen" ng-class="myCheck ? 'col-sm-12' : 'col-sm-8'">
           <div class="row">
             <div id="0" class="col-xs-4 option empty" ng-click="blockChoice($event)"></div>
             <div id="1" class="col-xs-4 option empty" ng-click="blockChoice($event)"></div>
