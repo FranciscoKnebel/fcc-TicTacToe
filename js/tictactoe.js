@@ -10,10 +10,6 @@ var app = angular.module('tictactoe', ['ngAnimate']);
 app.controller('Game', function($scope) {
   updateScore();
 
-  if(yourTurn === false) { /* AI plays first */
-
-  }
-
   $scope.ChooseTeam = function(team) {
     setUserTeam(team);
   }
@@ -102,9 +98,13 @@ app.controller('Game', function($scope) {
 
     if(team === 'X') {
       AITeam = 'O'
+      yourTurn = true;
     }
     else if (team === 'O') {
       AITeam = 'X'
+      setBlock(AIchoice(), false);
+      currentMove++;
+      yourTurn = true;
     }
     else { //bad behavior
       chooseTeam = false;
@@ -153,5 +153,9 @@ app.controller('Game', function($scope) {
     }
 
     currentMove = 0;
+    if(currentTeam === 'O') { /* or AI is X */
+      setBlock(AIchoice(), false);
+      currentMove++;
+    }
   }
 });
