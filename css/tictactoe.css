@@ -38,6 +38,11 @@ h3, h4 {
 	font-family: Port Lligat Slab, sans-serif;
 }
 
+p {
+  font-family: Kreon, sans-serif;
+  font-size: 1.5em;
+}
+
 .container-extras {
   background-color: #eee;
   border-style: double;
