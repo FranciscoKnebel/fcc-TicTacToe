@@ -26,10 +26,11 @@ app.controller('Game', function($scope) {
         currentMove++;
         if(checkWin(currentTeam)) {
           addWin(currentTeam);
+          $scope.lastgame = 'Last game you won!';
           //alert("Now, how did you do that? Contact me so I can fix it. Error 003");
         }
         else if (currentMove === 9) { //If all blocks are set and no winners was found, it's a draw.
-          alert('Draw! ' + currentScore[0] + '-' + currentScore[1]);
+          $scope.lastgame = 'Last game was a draw.';
           cleanBoard();
         }
         else {
@@ -39,9 +40,10 @@ app.controller('Game', function($scope) {
           currentMove++;
           if(checkWin(AITeam)) {
             addWin(AITeam);
+            $scope.lastgame = 'Last game you lost!';
           }
           else if (currentMove === 9){ //If all blocks are set and no winners was found, it's a draw.
-            alert('Draw! ' + currentScore[0] + '-' + currentScore[1]);
+            $scope.lastgame = 'Last game was a draw.';
             cleanBoard();
           }
           yourTurn = true;
@@ -80,7 +82,6 @@ app.controller('Game', function($scope) {
     }
 
     updateScore();
-    alert('Player ' + Team + ' won! ' + currentScore[0] + '-' + currentScore[1]);
     cleanBoard();
   }
 
